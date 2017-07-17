@@ -12,7 +12,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class CrimeFragment extends Fragment {
     private Crime mCrime;
@@ -52,8 +54,8 @@ public class CrimeFragment extends Fragment {
 
         mDateButton = (Button) v.findViewById(R.id.crime_date);
         if (mDateButton != null) {
-            String myData = new SimpleDateFormat("EEE, MMM d, Y").format(mCrime.getDate());
-            mDateButton.setText(myData);
+            DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
+            mDateButton.setText(df.format(mCrime.getDate()));
             mDateButton.setEnabled(false);
         }
 
