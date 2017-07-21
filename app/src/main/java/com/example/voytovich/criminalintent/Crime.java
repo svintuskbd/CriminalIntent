@@ -1,6 +1,8 @@
 package com.example.voytovich.criminalintent;
 
+import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 public class Crime {
@@ -40,5 +42,10 @@ public class Crime {
 
     public void setSolved(boolean solved) {
         mSolved = solved;
+    }
+
+    public static String getFormatingData(Date data) {
+        DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
+        return  df.format(data);
     }
 }
