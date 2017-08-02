@@ -33,7 +33,7 @@ public class CrimePagerActivity extends AppCompatActivity {
         UUID crimeId = (UUID) getIntent().getSerializableExtra(EXTRA_CRIME_ID);
 
         mViewPager = (ViewPager) findViewById(R.id.activity_crime_pager_view_pager);
-        //mCrimes = CrimeLab.get(this).getCrimes();
+        mCrimes = CrimeLab.get(this).getCrimes();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
