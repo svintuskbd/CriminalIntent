@@ -17,18 +17,15 @@ public class CrimeLab {
     }
 
     private CrimeLab(Context context){
-        //mAppContext = appContext;
         mCrimes = new ArrayList<>();
-        for (int i = 0; i < 100; i++){
-            Crime crime = new Crime();
-            crime.setTitle("Creime #" + i);
-            crime.setSolved(i % 2 == 0);
-            mCrimes.add(crime);
-        }
     }
 
     public List<Crime> getCrimes() {
         return mCrimes;
+    }
+
+    public void addCrime(Crime c) {
+        mCrimes.add(c);
     }
 
     public Crime getCrime(UUID id){

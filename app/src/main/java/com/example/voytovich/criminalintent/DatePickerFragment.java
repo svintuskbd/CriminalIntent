@@ -53,7 +53,7 @@ public class DatePickerFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         int year = mDatePicker.getYear();
-                        int nonth = mDatePicker.getMonth();
+                        int month = mDatePicker.getMonth();
                         int day = mDatePicker.getDayOfMonth();
 
                         Date date = new GregorianCalendar(year, month, day).getTime();

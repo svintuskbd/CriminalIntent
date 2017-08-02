@@ -22,12 +22,14 @@ public class CrimeFragment extends Fragment {
 
     public static final String ARG_CRIME_ID = "crime_id";
     private static final String DIALOG_DATE = "DialogDate";
+    private static final String DIALOG_DELETE = "DialogDelete";
     private static final int REQUEST_DATE = 0;
 
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
+    private Button mDeleteCrime;
 
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
@@ -80,6 +82,19 @@ public class CrimeFragment extends Fragment {
                     DatePickerFragment dialog = DatePickerFragment.newInstance(mCrime.getDate());
                     dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
                     dialog.show(manager, DIALOG_DATE);
+                }
+            });
+        }
+
+        mDeleteCrime = (Button) v.findViewById(R.id.crime_delete);
+        if (mDeleteCrime != null) {
+            mDeleteCrime.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    FragmentManager manager = getFragmentManager();
+                    DeleteCrimeFragment dialog = DeleteCrimeFragment.newInstance(mCrime.getId());
+                    dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
+                    dialog.show(manager, DIALOG_DELETE);
                 }
             });
         }

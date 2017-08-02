@@ -28,4 +28,5 @@
         android:layout_below="@id/list_item_crime_title_view"
         android:padding="4dp"
         tools:text="Crime date"/>
+
 </RelativeLayout>
