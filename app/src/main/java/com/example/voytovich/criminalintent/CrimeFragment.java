@@ -27,6 +27,7 @@ public class CrimeFragment extends Fragment {
 
     private Crime mCrime;
     private EditText mTitleField;
+    private EditText mDetails;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
     private Button mDeleteCrime;
@@ -63,6 +64,27 @@ public class CrimeFragment extends Fragment {
                 @Override
                 public void onTextChanged(CharSequence c, int start, int before, int count) {
                     mCrime.setTitle(c.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable c) {
+
+                }
+            });
+        }
+
+        mDetails = (EditText) v.findViewById(R.id.crime_details);
+        if (mDetails != null) {
+            mDetails.setText(mCrime.getDetails());
+            mDetails.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence c, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence c, int start, int before, int count) {
+                    mCrime.setDetails(c.toString());
                 }
 
                 @Override
@@ -113,10 +135,6 @@ public class CrimeFragment extends Fragment {
         return v;
     }
 
-    private void updateDate() {
-        mDateButton.setText(Crime.getFormatingData(mCrime.getDate()));
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) {
@@ -128,5 +146,16 @@ public class CrimeFragment extends Fragment {
             updateDate();
         }
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
+    }
+
+    private void updateDate() {
+        mDateButton.setText(Crime.getFormatingData(mCrime.getDate()));
     }
 }

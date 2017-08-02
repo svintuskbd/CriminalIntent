@@ -8,10 +8,15 @@ import java.util.UUID;
 public class Crime {
     private UUID mId;
     private String mTitle;
+    private String mDetails;
     private Date mDate;
     private boolean mSolved;
 
     public Crime() {
+        this(UUID.randomUUID());
+    }
+
+    public Crime(UUID id) {
         mId = UUID.randomUUID();
         mDate = new Date();
     }
@@ -42,6 +47,14 @@ public class Crime {
 
     public void setSolved(boolean solved) {
         mSolved = solved;
+    }
+
+    public String getDetails() {
+        return mDetails;
+    }
+
+    public void setDetails(String details) {
+        mDetails = details;
     }
 
     public static String getFormatingData(Date data) {
