@@ -45,8 +45,7 @@ public class DeleteCrimeFragment extends DialogFragment {
     private void deleteCrime(UUID crimeId) {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         Crime crime = crimeLab.getCrime(crimeId);
-        //List<Crime> crimes = crimeLab.getCrimes();
-        //crimes.remove(crime);
+        crimeLab.deleteCrime(crime);
         getTargetFragment().getActivity().finish();
     }
 }
