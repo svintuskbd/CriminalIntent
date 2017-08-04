@@ -8,7 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import java.util.List;
+import java.io.File;
 import java.util.UUID;
 
 public class DeleteCrimeFragment extends DialogFragment {
@@ -45,6 +45,10 @@ public class DeleteCrimeFragment extends DialogFragment {
     private void deleteCrime(UUID crimeId) {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         Crime crime = crimeLab.getCrime(crimeId);
+        File photoFile = crimeLab.getPhotoFile(crime);
+        if (photoFile != null) {
+            photoFile.delete();
+        }
         crimeLab.deleteCrime(crime);
         getTargetFragment().getActivity().finish();
     }

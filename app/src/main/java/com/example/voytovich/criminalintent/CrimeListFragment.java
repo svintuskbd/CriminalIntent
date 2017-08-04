@@ -53,7 +53,6 @@ public class CrimeListFragment extends Fragment {
             mButtonAddNew.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-
                     createCrime();
                     String messageResId = getResources().getString(R.string.app_name);
                     Toast.makeText(getActivity(), messageResId, Toast.LENGTH_SHORT).show();
