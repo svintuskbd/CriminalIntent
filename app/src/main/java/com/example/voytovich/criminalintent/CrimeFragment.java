@@ -234,7 +234,8 @@ public class CrimeFragment extends Fragment {
         mPhotoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //....
+                Intent i = ViewPhotoActivity.newIntent(getActivity(), mCrime.getId());
+                startActivity(i);
             }
         });
 
