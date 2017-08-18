@@ -1,5 +1,6 @@
 package com.example.voytovich.criminalintent;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,17 @@ public class CrimeListFragment extends Fragment {
     private boolean mNoResult;
     private LinearLayout mLinearLayout;
     private Button mButtonAddNew;
+    private Callbacks mCallbacks;
+
+    public interface Callbacks {
+        void onCrimeSelected(Crime crime);
+    }
+
+    @Override
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+        mCallbacks = (Callbacks) activity;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,6 +100,12 @@ public class CrimeListFragment extends Fragment {
     }
 
     @Override
+    public void onDetach(){
+        super.onDetach();
+        mCallbacks = null;
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_crime_list, menu);
@@ -116,28 +134,7 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
-    private void createCrime() {
-        Crime crime = new Crime();
-        CrimeLab.get(getActivity()).addCrime(crime);
-        Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
-        startActivity(intent);
-    }
-
-    private void updateSubtitle() {
-        CrimeLab crimeLab = CrimeLab.get(getActivity());
-        int crimeCount = crimeLab.getCrimes().size();
-        //String subtitle = getString(R.string.subtitle_format, crimeCount);
-        String subtitle = getResources().getQuantityString(R.plurals.subtitle_plural, crimeCount, crimeCount);
-
-        if (!mSubtitleVisible) {
-            subtitle = null;
-        }
-
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.getSupportActionBar().setSubtitle(subtitle);
-    }
-
-    private void updateUi(){
+    public void updateUi(){
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
         if (crimes.size() > 0) {
@@ -153,6 +150,29 @@ public class CrimeListFragment extends Fragment {
             mAdapter.notifyItemChanged(mCurrentCrimePosition);
         }
         updateSubtitle();
+    }
+
+    private void createCrime() {
+        Crime crime = new Crime();
+        CrimeLab.get(getActivity()).addCrime(crime);
+//        Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
+//        startActivity(intent);
+        updateUi();
+        mCallbacks.onCrimeSelected(crime);
+    }
+
+    private void updateSubtitle() {
+        CrimeLab crimeLab = CrimeLab.get(getActivity());
+        int crimeCount = crimeLab.getCrimes().size();
+        //String subtitle = getString(R.string.subtitle_format, crimeCount);
+        String subtitle = getResources().getQuantityString(R.plurals.subtitle_plural, crimeCount, crimeCount);
+
+        if (!mSubtitleVisible) {
+            subtitle = null;
+        }
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.getSupportActionBar().setSubtitle(subtitle);
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -182,9 +202,10 @@ public class CrimeListFragment extends Fragment {
         }
         @Override
         public void onClick(View v){
-            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
+//            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
+//            startActivity(intent);
+            mCallbacks.onCrimeSelected(mCrime);
             mCurrentCrimePosition = mPosition;
-            startActivity(intent);
         }
     }
 
